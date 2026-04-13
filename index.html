@@ -695,9 +695,7 @@
             header {
                 padding: 12px 20px
             }
-            nav {
-                display: none
-            }
+       
             .cards {
                 grid-template-columns: 1fr
             }
@@ -818,10 +816,22 @@
             transition: .3s
         }
         
-        nav.active::before {
-            opacity: 1;
-            pointer-events: auto
-        }
+       nav::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    z-index: -1;
+}
+
+nav.active::before {
+    opacity: 1;
+    pointer-events: auto;
+}
+        
     </style>
 </head>
 
@@ -1191,7 +1201,15 @@
                 burger.classList.remove("active");
                 nav.classList.remove("active");
             });
+            document.addEventListener("click", (e) => {
+    if (!nav.contains(e.target) && !burger.contains(e.target)) {
+        burger.classList.remove("active");
+        nav.classList.remove("active");
+    }
+});
         });
+
+        
     </script>
 </body>
 
